@@ -1,9 +1,9 @@
 {
-  "files": [
-    "src/*.ts",
-    "src/model/*.ts"
-  ],
+  "files": ["src/*.ts", "src/model/*.ts"],
   "compilerOptions": {
-    "target": "es5"
+    "target": "es5",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "esModuleInterop": true,
   }
 }
