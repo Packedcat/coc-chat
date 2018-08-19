@@ -15,6 +15,8 @@ db.once('open', function() {
     name: String,
   })
   var Kitten = mongoose.model('Kitten', kittySchema)
-  var silence = new Kitten({ name: 'Silence' })
-  silence.save().then(() => console.log('fuck'))
+  Kitten.find((err, res) => {
+    console.log(err)
+    console.log(res)
+  })
 })
