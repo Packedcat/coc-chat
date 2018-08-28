@@ -8,7 +8,7 @@ class Server {
     this.server = http.Server(this.app)
     this.io = createSocket(this.server)
   }
-  start() {
+  bootstrap() {
     this.server.listen(this.app.get('port'), () => {
       console.log(
         '\x1b[36m  App is running at http://localhost:%d in %s mode\x1b[0m',

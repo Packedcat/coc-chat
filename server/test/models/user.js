@@ -1,17 +1,33 @@
+const bcrypt = require('bcrypt-nodejs')
 const mongoose = require('mongoose')
 
-var msgSchema = mongoose.Schema(
+const userSchema = mongoose.Schema(
   {
-    sid: String,
-    cid: String,
-    ipaddr: String,
-    room: String,
-    msg: String,
-    timestamp: Date,
+    name: { type: String, unique: true },
+    password: String,
   },
-  { strict: false }
+  { timestamps: true }
 )
 
-var Message = mongoose.model('Messages', msgSchema)
+userSchema.pre('save', function(next) {
+  const user = this
+  if (!user.isModified('password')) return next()
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err)
+    bcrypt.hash(user.password, salt, undefined, (err, hash) => {
+      if (err) return next(err)
+      user.password = hash
+      next()
+    })
+  })
+})
 
-module.exports = Message
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    cb(err, isMatch)
+  })
+}
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User
