@@ -1,6 +1,8 @@
 const socketIO = require('socket.io')
-const { req2ip } = require('./util/req-treat')
 const Message = require('./models/message')
+const { req2ip } = require('./util/req-treat')
+// TODO: almost need session in socket
+// const sessionMiddleware = require('./middleware/session.middleware')
 
 function createSocket(server) {
   const io = socketIO(server)

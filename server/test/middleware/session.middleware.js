@@ -25,9 +25,8 @@ const sessionMiddleware = session({
     autoReconnect: true,
   }),
   cookie: {
-    maxAge: 2 * 60 * 1000,
+    maxAge: 10 * 60 * 1000,
   },
-  expires: new Date(Date.now() + 30 * 1000),
 })
 
 module.exports = sessionMiddleware

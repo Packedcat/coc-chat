@@ -1,3 +1,4 @@
+const path = require('path')
 const dotenv = require('dotenv')
 const express = require('express')
 const lusca = require('lusca')
@@ -5,15 +6,16 @@ const passport = require('passport')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const roomController = require('./controllers/room.controller')
-const userController = require('./controllers/user.controller')
+const accountController = require('./controllers/account.controller')
 const sessionMiddleware = require('./middleware/session.middleware')
-require('./config/passport.config')
+const { isAuthenticated } = require('./config/passport.config')
 
 dotenv.config({ path: '.env' })
 
 const app = express()
 app.set('port', process.env.PORT || 3000)
-
+app.set('views', path.join(__dirname, '../views'))
+app.set('view engine', 'pug')
 // compress all responses
 // app.use(compression)
 // parse application/json
@@ -26,29 +28,13 @@ app.use(sessionMiddleware)
 app.use(passport.initialize())
 app.use(passport.session())
 // Web application security
-// app.use(lusca.xframe('SAMEORIGIN'))
-// app.use(lusca.xssProtection(true))
+app.use(lusca.xframe('SAMEORIGIN'))
+app.use(lusca.xssProtection(true))
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/room.html')
+app.get('/', isAuthenticated, (req, res) => {
+  res.render('room')
 })
-app.get('/login', (req, res) => {
-  if (req.user) return res.redirect('/')
-  res.sendFile(__dirname + '/login.html')
-})
-app.get('/signup', (req, res) => {
-  res.sendFile(__dirname + '/index.html')
-})
-app.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) return next(err)
-    if (!user) return res.redirect('/login')
-    req.logIn(user, err => {
-      if (err) return next(err)
-      res.redirect(req.session.returnTo || '/')
-    })
-  })(req, res, next)
-})
-app.post('/signup', userController.postSignup)
+
+app.use(accountController)
 
 module.exports = app
