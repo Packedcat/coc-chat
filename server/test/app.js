@@ -31,10 +31,16 @@ app.use(passport.session())
 app.use(lusca.xframe('SAMEORIGIN'))
 app.use(lusca.xssProtection(true))
 
-app.get('/', isAuthenticated, (req, res) => {
+app.get('/', (req, res) => {
   res.render('room')
 })
 
+app.get('/api', (req, res) => {
+  res.render('api')
+})
+
+
+app.use(roomController)
 app.use(accountController)
 
 module.exports = app

@@ -1,18 +1,54 @@
 const express = require('express')
 const router = express.Router()
+const Room = require('../models/room')
+const socketServer = require('../socket-server')
 
-// middleware that is specific to this router
-router.use(function timeLog (req, res, next) {
-  console.log('Time: ', Date.now())
-  next()
+// TODO: error catch
+
+router.get('/api/rooms', (req, res, next) => {
+  Room.find((err, result) => {
+    if (err) return next(err)
+    res.send(result)
+  })
 })
-// define the home page route
-router.get('/', function (req, res) {
-  res.send('Birds home page')
+
+router.post('/api/rooms', (req, res) => {
+  Room.findOne({ name: req.body.name }, (err, existingRoom) => {
+    if (err) return next(err)
+    // if (existingRoom) return res.redirect('/account/signup')
+    const room = new Room({
+      name: req.body.name,
+    })
+    room.save(err => {
+      if (err) return next(err)
+      socketServer.createRoom(room.name)
+      res.send(room)
+    })
+  })
 })
-// define the about route
-router.get('/room', function (req, res) {
-  res.send('About birds')
+
+router.delete('/api/rooms/:room_id', (req, res, next) => {
+  Room.deleteOne({ _id: req.params.room_id }, (err, result) => {
+    if (err) return next(err)
+    res.send(result)
+  })
 })
+
+router.get('/api/rooms/:room_id', (req, res, next) => {
+  Room.findOne({ _id: req.params.room_id }, (err, result) => {
+    if (err) return next(err)
+    res.send(result)
+  })
+})
+
+
+router.patch('/api/rooms/:room_id', (req, res, next) => {
+  Room.findOne({ _id: req.params.room_id }, (err, result) => {
+    if (err) return next(err)
+    // update
+    res.send(result)
+  })
+})
+
 
 module.exports = router

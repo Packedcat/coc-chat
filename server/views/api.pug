@@ -1,0 +1,20 @@
+head
+  script(src='https://unpkg.com/axios/dist/axios.min.js')
+  script.
+    function post() {
+      axios.post('/api/rooms', { name: 'ccd' })
+    }
+    function deleteOne(id) {
+      axios.delete(`/api/rooms/${id}`)
+    }
+    function get(id) {
+      axios.get(`/api/rooms/${id}`)
+    }
+    function getAll() {
+      axios.get('/api/rooms')
+    }
+body
+  button(onclick='post()') post
+  button(onclick=`deleteOne('5b8969ff8727b92b7bbae0d9')`) deleteOne
+  button(onclick=`get('5b8969ff8727b92b7bbae0d9')`) getOne
+  button(onclick='getAll()') getAll

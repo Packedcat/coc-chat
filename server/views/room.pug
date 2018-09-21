@@ -17,7 +17,7 @@ body
   script(src="https://code.jquery.com/jquery-1.11.1.js")
   script.
     $(function () {
-      var socket = io();
+      var socket = io('/ccd');
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
@@ -27,3 +27,20 @@ body
         $('#messages').append($('<li>').text(msg));
       });
     });
+    //- var hiddenProperty = 'hidden' in document ? 'hidden' :
+    //-   'webkitHidden' in document ? 'webkitHidden' :
+    //-   'mozHidden' in document ? 'mozHidden' :
+    //-   null;
+    //- var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+    //- var onVisibilityChange = function(){
+    //-     if (!document[hiddenProperty]) {
+    //-         console.log('页面非激活');
+    //-     }else{
+    //-         console.log('页面激活')
+    //-     }
+    //- }
+    //- document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+    //- 大厅
+    //-   刷新按钮
+    //-   一分钟轮询（其他刷行行为重置计时器）
+    //-   页面激活时间触发（或聚焦）
