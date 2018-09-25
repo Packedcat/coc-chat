@@ -2,12 +2,6 @@
 .vscode
 .idea
 
-# Dependency directory
-server/node_modules
-
-#Build
-/server/dist
-
 # Log files
 npm-debug.log*
 yarn-debug.log*
