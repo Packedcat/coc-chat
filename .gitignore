@@ -7,6 +7,17 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Dependency directory
+server/node_modules
+client/node_modules
+
+# Testing
+client/coverage
+
+# Build
+server/dist
+client/build
+
 # misc
 .env
 .env.development
