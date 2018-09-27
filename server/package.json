@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development DEBUG=* nodemon --inspect -w test -x node test/main.js",
+    "start": "NODE_ENV=development PORT=4000 DEBUG=* nodemon --inspect -w test -x node test/main.js",
     "build": "gulp build"
   },
   "author": "Kitsch",
