@@ -1,0 +1,17 @@
+- [React.js](https://reactjs.org/) - UI library
+- [React Router](https://reacttraining.com/react-router/) - client-side dynamic routing
+- [Redux.js](https://redux.js.org/) - predictable state container
+- [Formik](https://github.com/jaredpalmer/formik) - build forms in React
+- [Next.js](https://nextjs.org/) - server-side rendering
+- [JSS](http://cssinjs.org) - write style with JavaScript
+- [TypeScript](https://www.typescriptlang.org/) - static type checking
+- [TSLint](https://palantir.github.io/tslint/) - TypeScript syntax linter
+- [Prettier](https://prettier.io/) - code formatter
+- passport
+- mongoose
+- socket.io
+- lodash
+- express
+- session
+- redis
+- ...
